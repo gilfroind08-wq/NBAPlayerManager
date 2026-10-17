@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "381010480765",
+    "project_id": "nbaplayermanager",
+    "storage_bucket": "nbaplayermanager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381010480765:android:af8be950cf963a1fdbeb14",
+        "android_client_info": {
+          "package_name": "com.example.nbaplayermanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATBXXt2XAa2oijKXIPf8vf_Et_1aeR4P8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

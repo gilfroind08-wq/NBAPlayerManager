@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NBA Player Manager"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"/>
+
+        <EditText
+            android:id="@+id/etPlayerId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="מזהה שחקן"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/etPlayerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שם השחקן"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etPlayerTeam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שם הקבוצה"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/etPlayerPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ממוצע נקודות למשחק"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/btnInsert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="הוסף שחקן"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="חפש שחקן לפי מזהה"/>
+
+        <Button
+            android:id="@+id/btnSelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="הצג את כל השחקנים"/>
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="כאן יוצגו נתוני השחקנים"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
