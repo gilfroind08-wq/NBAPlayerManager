@@ -68,6 +68,20 @@
             android:layout_height="wrap_content"
             android:text="הצג את כל השחקנים"/>
 
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="עדכן ממוצע נקודות"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="מחק שחקן"/>
+
+
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"

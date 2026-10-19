@@ -16,10 +16,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+import androidx.annotation.Nullable;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+
 public class FirestoreDAO {
 
     private static final String COLLECTION_NAME = "players";
-
+    private ListenerRegistration listenerRegistration;
     // CREATE - Add a player
     public void createDocument(String name, String id,
                                String team, double points) {
@@ -119,4 +128,92 @@ public class FirestoreDAO {
                     }
                 });
     }
+
+
+
+    public void updateDocument(String documentID, double newPoints) {
+
+        DocumentReference docRef = FirebaseFirestore.getInstance()
+                .collection(COLLECTION_NAME).document(documentID);
+
+        docRef.update("points", newPoints)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("DAO_FIREBASE", "SUCCESSFUL UPDATE!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("DAO_FIREBASE", "UPDATE FAILED", e);
+                    }
+                });
+    }
+
+    public void deleteDocument(String documentID) {
+
+        DocumentReference docRef = FirebaseFirestore.getInstance()
+                .collection(COLLECTION_NAME).document(documentID);
+
+        docRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("DAO_FIREBASE", "SUCCESSFUL DELETE!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("DAO_FIREBASE", "DELETE FAILED", e);
+                    }
+                });
+    }
+
+    public void listenToAllDocumentsChange() {
+
+        CollectionReference colRef = FirebaseFirestore.getInstance()
+                .collection(COLLECTION_NAME);
+
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+        }
+
+        listenerRegistration = colRef.addSnapshotListener(
+                new EventListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+
+                        if (error != null) {
+                            Log.e("DAO_MULTIPLE_CHANGES", "Listener error", error);
+                            return;
+                        }
+
+                        if (value == null)
+                            return;
+
+                        for (DocumentChange doc : value.getDocumentChanges()) {
+
+                            Player player = doc.getDocument().toObject(Player.class);
+
+                            if (player != null) {
+                                Log.d("DAO_MULTIPLE_CHANGES",
+                                        doc.getType() + ": " + player.toString());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void stopListening() {
+
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+            listenerRegistration = null;
+        }
+    }
+
 }

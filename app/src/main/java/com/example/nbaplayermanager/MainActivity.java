@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etPlayerId, etPlayerName;
     private EditText etPlayerTeam, etPlayerPoints;
-    private Button btnInsert, btnSearch, btnSelect;
+    private Button btnInsert, btnSearch, btnSelect, btnUpdate, btnDelete;
     private TextView tvContent;
 
     private FirestoreDAO fsDAO;
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         btnInsert = findViewById(R.id.btnInsert);
         btnSearch = findViewById(R.id.btnSearch);
         btnSelect = findViewById(R.id.btnSelect);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
         tvContent = findViewById(R.id.tvContent);
 
         fsDAO = new FirestoreDAO();
@@ -133,5 +135,60 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = etPlayerId.getText().toString().trim();
+                String pointsText = etPlayerPoints.getText().toString().trim();
+
+                if (id.isEmpty() || pointsText.isEmpty()) {
+                    Toast.makeText(MainActivity.this,
+                            "Enter player ID and new points",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    double newPoints = Double.parseDouble(
+                            pointsText.replace(',', '.'));
+                    fsDAO.updateDocument(id, newPoints);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(MainActivity.this,
+                            "Invalid points value",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = etPlayerId.getText().toString().trim();
+
+                if (id.isEmpty()) {
+                    Toast.makeText(MainActivity.this,
+                            "Enter player ID",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                fsDAO.deleteDocument(id);
+            }
+        });
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fsDAO.listenToAllDocumentsChange();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fsDAO.stopListening();
+    }
+
 }
