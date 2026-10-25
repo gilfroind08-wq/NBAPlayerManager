@@ -82,6 +82,31 @@
             android:text="מחק שחקן"/>
 
 
+
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="צלם תמונה"
+            android:layout_marginTop="20dp"/>
+
+        <ImageView
+            android:id="@+id/ivPlayerPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="תמונת השחקן"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnSavePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="שמור תמונה ב-Firebase"
+            android:layout_marginTop="10dp"/>
+
+
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"
